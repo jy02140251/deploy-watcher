@@ -1,0 +1,27 @@
+# deploy-watcher configuration example
+global:
+  check_interval: 10
+  timeout: 5
+  failure_threshold: 3
+  log_format: json
+
+services:
+  - name: api-gateway
+    url: https://api.example.com/health
+    method: GET
+    expected_status: 200
+
+  - name: web-frontend
+    url: https://www.example.com
+    method: GET
+    expected_status: 200
+
+notifications:
+  slack:
+    webhook_url: ""
+    channel: "#deployments"
+
+rollback:
+  enabled: false
+  command: "./rollback.sh"
+  cooldown: 300
